@@ -1,75 +1,41 @@
-# Nuxt Minimal Starter
+# logQuest Project Management Tracker UI
+Frontend developed with Vue.js/Nuxt and Tailwind CSS. It helps developers track daily updates, log hours spent on a project, and maintain a structured progress history.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## ✨ Features
 
-## Setup
+- 📝 **Daily Updates** – Take notes about what you've done each day.
+- ⏳ **Time Tracking** – Log the number of hours spent on a project.
+- 📅 **Days Spent Counter** – Track the total days dedicated to the project.
+- 🚀 **Production Status** – Monitor the project's launch progress.
+- 📊 **Project Dashboard** – View a summarized overview of your progress.
 
-Make sure to install dependencies:
+## 🖥️ Frontend Installation (Vue.js/Nuxt)
 
-```bash
-# npm
-npm install
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/project-management-tracker-frontend.git
+   cd project-management-tracker-frontend
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-# pnpm
-pnpm install
+## 📌 Usage
+- Use the frontend interface to add daily updates, track time spent, and monitor progress.
+- The backend API handles data storage, authentication, and business logic.
+- Retrieve progress and total working hours through the API or dashboard.
 
-# yarn
-yarn install
+## 🚀 Production
+*(Include details if the project is live, e.g., deployed API and frontend URLs.)*
 
-# bun
-bun install
-```
+## 🤝 Contributing
+Contributions are welcome! Feel free to submit issues and pull requests.
 
-## Development Server
+---
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+🎯 Stay productive and organized with the **Project Management Tracker**!
