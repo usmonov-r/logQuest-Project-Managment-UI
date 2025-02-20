@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project - ProjectTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Flatpickr for date picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        .gradient-text {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    background-clip: text; /* Standard property */
+    -webkit-background-clip: text; /* Webkit-specific property */
+    -webkit-text-fill-color: transparent;
+}
+
+        .form-card {
+            transition: transform 0.3s ease;
+        }
+        .form-card:hover {
+            transform: translateY(-2px);
+        }
+        .input-focus-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .input-focus-effect::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .input-focus-effect:focus-within::after {
+            transform: translateX(0);
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .status-dot {
+            transition: transform 0.3s ease;
+        }
+        .status-dot:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <a href="projects.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">ProjectTracker</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="projects.html" class="text-gray-600 hover:text-indigo-600 flex items-center space-x-1">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Projects</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="mb-8 slide-in" style="animation-delay: 0.1s">
+            <h1 class="text-2xl font-bold text-gray-900">Create New Project</h1>
+            <p class="text-gray-600">Fill in the details below to create your new project</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-xl shadow-sm p-6 form-card slide-in" style="animation-delay: 0.2s">
+            <form id="createProjectForm" class="space-y-6">
+                <!-- Title Input -->
+                <div class="space-y-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700">Project Title</label>
+                    <div class="input-focus-effect">
+                        <input type="text" id="title" name="title" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            placeholder="Enter project title">
+                    </div>
+                </div>
+
+                <!-- Description Input -->
+                <div class="space-y-2">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <div class="input-focus-effect">
+                        <textarea id="description" name="description" rows="4" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
+                            placeholder="Describe your project"></textarea>
+                    </div>
+                    <p class="text-sm text-gray-500 flex justify-end">
+                        <span id="charCount">0</span>/200 characters
+                    </p>
+                </div>
+
+                <!-- Deadline Input -->
+                <div class="space-y-2">
+                    <label for="deadline" class="block text-sm font-medium text-gray-700">Deadline</label>
+                    <div class="input-focus-effect relative">
+                        <input type="text" id="deadline" name="deadline" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            placeholder="Select deadline">
+                        <div class="absolute right-3 top-2.5 text-gray-400">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Selection -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <div class="relative">
+                                <input type="radio" name="status" value="planning" class="sr-only" checked>
+                                <div class="w-4 h-4 rounded-full border-2 border-yellow-400 status-dot group-hover:border-yellow-500"></div>
+                                <div class="absolute inset-0 rounded-full bg-yellow-400 transform scale-0 transition-transform group-hover:scale-75"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">Planning</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <div class="relative">
+                                <input type="radio" name="status" value="active" class="sr-only">
+                                <div class="w-4 h-4 rounded-full border-2 border-green-400 status-dot group-hover:border-green-500"></div>
+                                <div class="absolute inset-0 rounded-full bg-green-400 transform scale-0 transition-transform group-hover:scale-75"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">Active</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <div class="relative">
+                                <input type="radio" name="status" value="onhold" class="sr-only">
+                                <div class="w-4 h-4 rounded-full border-2 border-orange-400 status-dot group-hover:border-orange-500"></div>
+                                <div class="absolute inset-0 rounded-full bg-orange-400 transform scale-0 transition-transform group-hover:scale-75"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">On Hold</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Priority Selection -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Priority</label>
+                    <div class="flex space-x-4">
+                        <button type="button" class="px-4 py-2 rounded-lg border-2 border-gray-200 text-sm font-medium hover:border-indigo-500 hover:text-indigo-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500" data-priority="low">
+                            Low
+                        </button>
+                        <button type="button" class="px-4 py-2 rounded-lg border-2 border-gray-200 text-sm font-medium hover:border-indigo-500 hover:text-indigo-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500" data-priority="medium">
+                            Medium
+                        </button>
+                        <button type="button" class="px-4 py-2 rounded-lg border-2 border-gray-200 text-sm font-medium hover:border-indigo-500 hover:text-indigo-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500" data-priority="high">
+                            High
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Team Members</label>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="flex items-center space-x-2 px-3 py-1.5 bg-gray-100 rounded-full">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=6366F1&color=fff" alt="John Doe" class="w-6 h-6 rounded-full">
+                            <span class="text-sm text-gray-700">John Doe</span>
+                            <button type="button" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+                            <i class="fas fa-plus mr-1"></i>
+                            Add Member
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center justify-center space-x-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Create Project</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Flatpickr date picker
+        flatpickr("#deadline", {
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "F j, Y",
+            animate: true
+        });
+
+        // Character counter for description
+        const description = document.getElementById('description');
+        const charCount = document.getElementById('charCount');
+
+        description.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            if (count > 200) {
+                this.value = this.value.substring(0, 200);
+                charCount.textContent = 200;
+            }
+        });
+
+        // Priority button selection
+        const priorityButtons = document.querySelectorAll('[data-priority]');
+        priorityButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                priorityButtons.forEach(btn => {
+                    btn.classList.remove('border-indigo-500', 'text-indigo-600');
+                });
+                button.classList.add('border-indigo-500', 'text-indigo-600');
+            });
+        });
+
+        // Form submission
+        document.getElementById('createProjectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            console.log('Form submitted!');
+        });
+
+        // Status radio button animation
+        const statusRadios = document.querySelectorAll('input[name="status"]');
+        statusRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const dot = this.parentElement.querySelector('.absolute');
+                if (this.checked) {
+                    dot.style.transform = 'scale(1)';
+                } else {
+                    dot.style.transform = 'scale(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

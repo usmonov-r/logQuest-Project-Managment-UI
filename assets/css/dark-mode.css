@@ -1,0 +1,149 @@
+/* Base dark mode styles */
+.dark body,
+.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+/* Component dark mode styles */
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-white,
+.dark .project-card,
+.dark .note-card,
+.dark [class*="bg-white"],
+.dark [class*="bg-gray-50"],
+.dark [class*="bg-gray-100"] {
+  background-color: #1f2937 !important;
+}
+
+/* Text colors */
+.dark .text-gray-900 {
+  color: #f3f4f6 !important;
+}
+
+.dark .text-gray-800 {
+  color: #e5e7eb !important;
+}
+
+.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+/* Form elements */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #4b5563 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Modal and dialog styles */
+.dark [role="dialog"],
+.dark div[class*="fixed inset-0"] > div[class*="bg-white"] {
+  background-color: #1f2937 !important;
+}
+
+/* Note form and timeline styles */
+.dark .timeline-dot {
+  background-color: #4b5563 !important;
+  border-color: #1f2937 !important;
+}
+
+.dark .timeline-line {
+  background-color: #4b5563 !important;
+}
+
+.dark .note-card {
+  border: 1px solid #374151 !important;
+}
+
+
+.dark .completed-card {
+  background: linear-gradient(135deg, #064e3b 0%, #134e4a 100%) !important;
+  border-color: #2dd4bf !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .completed-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .completed-card .card-shine {
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(45, 212, 191, 0) 30%,
+    rgba(45, 212, 191, 0.1) 40%,
+    rgba(45, 212, 191, 0) 50%,
+    transparent 100%
+  ) !important;
+}
+
+.dark .completed-badge {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+  color: #ffffff !important;
+}
+
+
+.dark .note-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+  border-color: #4b5563 !important;
+}
+
+/* Button styles */
+.dark .btn-primary {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+.dark .btn-primary:hover {
+  background-color: #4338ca !important;
+}
+
+.dark .btn-secondary {
+  background-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+.dark .btn-secondary:hover {
+  background-color: #374151 !important;
+}
+
+/* Gradient text adjustments */
+.dark .gradient-text {
+  --tw-gradient-from: #818cf8 !important;
+  --tw-gradient-to: #c084fc !important;
+}
+
+
+/* Status colors */
+.dark .bg-green-100 {
+  background-color: rgba(6, 78, 59, 0.5) !important;
+}
+.dark .bg-orange-100 {
+  background-color: rgba(17, 118, 91, 0.5) !important;
+}
+
+.dark .bg-yellow-100 {
+  background-color: rgba(120, 53, 15, 0.5) !important;
+}
+
+.dark .bg-red-100 {
+  background-color: rgba(127, 29, 29, 0.5) !important;
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Note - ProjectTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .form-card {
+            transition: transform 0.3s ease;
+        }
+        .form-card:hover {
+            transform: translateY(-2px);
+        }
+        .input-focus-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .input-focus-effect::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .input-focus-effect:focus-within::after {
+            transform: translateX(0);
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <a href="project-notes.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">ProjectTracker</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="project-notes.html" class="text-gray-600 hover:text-indigo-600 flex items-center space-x-1">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Notes</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="mb-8 slide-in" style="animation-delay: 0.1s">
+            <h1 class="text-2xl font-bold text-gray-900">Add New Note</h1>
+            <p class="text-gray-600 mt-1">Record your progress and plan next steps</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-xl shadow-sm p-6 form-card slide-in" style="animation-delay: 0.2s">
+            <form id="addNoteForm" class="space-y-6">
+                <!-- Title Input -->
+                <div class="space-y-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700">Note Title</label>
+                    <div class="input-focus-effect">
+                        <input type="text" id="title" name="title" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            placeholder="Enter note title">
+                    </div>
+                </div>
+
+                <!-- Work Time Input -->
+                <div class="space-y-2">
+                    <label for="workTime" class="block text-sm font-medium text-gray-700">Work Time (hours)</label>
+                    <div class="input-focus-effect relative">
+                        <input type="number" id="workTime" name="workTime" min="0" step="0.5"
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            placeholder="Enter work time in hours">
+                        <div class="absolute right-3 top-2.5 text-gray-400">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Input -->
+                <div class="space-y-2">
+                    <label for="content" class="block text-sm font-medium text-gray-700">Today's Progress</label>
+                    <div class="input-focus-effect">
+                        <textarea id="content" name="content" rows="6" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
+                            placeholder="Describe what you accomplished today"></textarea>
+                    </div>
+                    <p class="text-sm text-gray-500 flex justify-end">
+                        <span id="charCount">0</span>/500 characters
+                    </p>
+                </div>
+
+                <!-- Next Steps Input -->
+                <div class="space-y-2">
+                    <label for="nextSteps" class="block text-sm font-medium text-gray-700">Next Steps</label>
+                    <div class="input-focus-effect">
+                        <textarea id="nextSteps" name="nextSteps" rows="4" 
+                            class="block w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
+                            placeholder="What are the next steps for tomorrow?"></textarea>
+                    </div>
+                </div>
+
+                <!-- Additional Options -->
+                <div class="flex items-center space-x-4 pt-4">
+                    <button type="button" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600">
+                        <i class="fas fa-paperclip"></i>
+                        <span>Attach Files</span>
+                    </button>
+                    <button type="button" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600">
+                        <i class="fas fa-tag"></i>
+                        <span>Add Tags</span>
+                    </button>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="flex space-x-4 pt-4">
+                    <button type="submit" class="flex-1 bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center justify-center space-x-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Note</span>
+                    </button>
+                    <button type="button" onclick="window.location.href='project-notes.html'" 
+                        class="flex-1 bg-gray-100 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-200 transition duration-300 flex items-center justify-center space-x-2">
+                        <i class="fas fa-times"></i>
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Character counter for content
+        const content = document.getElementById('content');
+        const charCount = document.getElementById('charCount');
+
+        content.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            if (count > 500) {
+                this.value = this.value.substring(0, 500);
+                charCount.textContent = 500;
+            }
+        });
+
+        // Form submission
+        document.getElementById('addNoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                title: document.getElementById('title').value,
+                workTime: document.getElementById('workTime').value,
+                content: document.getElementById('content').value,
+                nextSteps: document.getElementById('nextSteps').value
+            };
+
+            // Add your form submission logic here
+            console.log('Form Data:', formData);
+            
+            // Redirect back to notes page after submission
+            // window.location.href = 'project-notes.html';
+        });
+
+        // Work time input validation
+        const workTime = document.getElementById('workTime');
+        workTime.addEventListener('input', function() {
+            if (this.value < 0) {
+                this.value = 0;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail - ProjectTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366F1, #A855F7);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            border: 3px solid white;
+        }
+        .note-card {
+            transition: all 0.3s ease;
+        }
+        .note-card:hover {
+            transform: translateX(4px);
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        /* Modal Styles */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+        .modal-backdrop.active {
+            display: flex;
+        }
+        .modal-backdrop.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        /* Quick Note Form Styles */
+        .quick-note {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            transform: translateY(-10px);
+            opacity: 0;
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <a href="projects.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">ProjectTracker</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="window.location.href='add-note.html'" class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center space-x-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Note</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Sidebar - Project Info -->
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+                    <!-- Project Header -->
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-gray-900">Website Redesign Project</h1>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium">Active</span>
+                            <span class="text-gray-500">•</span>
+                            <span class="text-gray-600">Created Dec 15, 2023</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Stats -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Total Time</div>
+                            <div class="text-xl font-semibold text-gray-900">47h</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">Notes</div>
+                            <div class="text-xl font-semibold text-gray-900">12</div>
+                        </div>
+                    </div>
+
+                    <!-- Project Progress -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-600">Progress</span>
+                            <span class="text-indigo-600 font-medium">75%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Team Members -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Team Members</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="flex items-center space-x-2 px-3 py-1.5 bg-gray-100 rounded-full">
+                                <img src="https://ui-avatars.com/api/?name=John+Doe&background=6366F1&color=fff" alt="John Doe" class="w-6 h-6 rounded-full">
+                                <span class="text-sm text-gray-700">John Doe</span>
+                            </div>
+                            <div class="flex items-center space-x-2 px-3 py-1.5 bg-gray-100 rounded-full">
+                                <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=A855F7&color=fff" alt="Jane Smith" class="w-6 h-6 rounded-full">
+                                <span class="text-sm text-gray-700">Jane Smith</span>
+                            </div>
+                            <button class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+                                <i class="fas fa-plus mr-1"></i>
+                                Add Member
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Project Description -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Description</h3>
+                        <p class="text-gray-600 text-sm">Complete redesign of the company website with focus on improved user experience, modern design, and better conversion rates.</p>
+                    </div>
+
+                    <!-- Project Actions -->
+                    <div class="flex flex-col space-y-2">
+                        <button class="w-full bg-gray-100 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-200 transition duration-300 flex items-center justify-center space-x-2">
+                            <i class="fas fa-edit"></i>
+                            <span>Edit Project</span>
+                        </button>
+                        <button class="w-full bg-gray-100 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-200 transition duration-300 flex items-center justify-center space-x-2">
+                            <i class="fas fa-cog"></i>
+                            <span>Project Settings</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content - Notes Timeline -->
+            <div class="lg:w-2/3">
+                <!-- Quick Note Form -->
+                <div class="quick-note shadow-sm p-6 mb-8">
+                    <form id="quickNoteForm" class="space-y-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Quick Note</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <input type="number" name="hours" min="0" max="24" class="w-16 px-2 py-1 border rounded-lg text-sm" placeholder="Hours">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" name="title" class="w-full px-4 py-2 border rounded-lg" placeholder="Note Title">
+                        <textarea name="content" rows="3" class="w-full px-4 py-2 border rounded-lg resize-none" placeholder="What did you work on?"></textarea>
+                        <div class="flex justify-end space-x-2">
+                            <button type="button" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                            <button type="submit" class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-600 hover:to-purple-600 transition duration-300">
+                                Add Note
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notes Timeline -->
+                <div class="space-y-6 relative">
+                    <div class="timeline-line"></div>
+
+                    <!-- Today's Notes -->
+                    <div class="mb-8">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4 pl-10">Today</h2>
+                        <!-- Note Card -->
+                        <div class="relative pl-10 slide-in" style="animation-delay: 0.1s">
+                            <div class="timeline-dot"></div>
+                            <div class="note-card bg-white rounded-xl p-6 shadow-sm mb-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-gray-900">Homepage Redesign Progress</h3>
+                                    <span class="px-2 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-xs font-medium">4h</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">Completed the initial wireframes for the homepage. The new design focuses on improving user engagement through better visual hierarchy and clearer call-to-actions.</p>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">2:30 PM</span>
+                                    <button class="text-indigo-600 hover:text-indigo-700 font-medium view-details">View Details →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yesterday's Notes -->
+                    <div class="mb-8">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4 pl-10">Yesterday</h2>
+                        <!-- Note Card -->
+                        <div class="relative pl-10 slide-in" style="animation-delay: 0.2s">
+                            <div class="timeline-dot"></div>
+                            <div class="note-card bg-white rounded-xl p-6 shadow-sm mb-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-gray-900">Mobile Navigation Implementation</h3>
+                                    <span class="px-2 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-xs font-medium">6h</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">Implemented responsive navigation menu with smooth animations. Added hamburger menu for mobile view with sliding drawer navigation.</p>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">4:15 PM</span>
+                                    <button class="text-indigo-600 hover:text-indigo-700 font-medium view-details">View Details →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earlier Notes -->
+                    <div class="mb-8">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4 pl-10">December 20, 2023</h2>
+                        <!-- Note Card -->
+                        <div class="relative pl-10 slide-in" style="animation-delay: 0.3s">
+                            <div class="timeline-dot"></div>
+                            <div class="note-card bg-white rounded-xl p-6 shadow-sm mb-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-semibold text-gray-900">Performance Optimization</h3>
+                                    <span class="px-2 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-xs font-medium">3h</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4">Optimized image loading with lazy loading implementation. Improved overall page load time by 40%. Implemented caching strategies.</p>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-500">11:30 AM</span>
+                                    <button class="text-indigo-600 hover:text-indigo-700 font-medium view-details">View Details →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Note Detail Modal -->
+    <div id="noteModal" class="modal-backdrop">
+        <div class="modal-content p-6">
+            <div class="flex justify-between items-start mb-6">
+                <h2 class="text-xl font-bold text-gray-900" id="modalTitle">Note Title</h2>
+                <button class="text-gray-500 hover:text-gray-700 close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500" id="modalDate">Date</span>
+                    <span class="px-2 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-xs font-medium" id="modalTime">Time</span>
+                </div>
+                <div class="prose prose-sm">
+                    <p id="modalContent" class="text-gray-600"></p>
+                </div>
+                <div class="border-t pt-4 mt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">Attachments</h4>
+                    <div class="flex flex-wrap gap-2" id="modalAttachments">
+                        <!-- Attachments will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="border-t pt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">Comments</h4>
+                    <div class="space-y-3" id="modalComments">
+                        <!-- Comments will be dynamically added here -->
+                    </div>
+                    <div class="mt-3">
+                        <textarea class="w-full px-3 py-2 border rounded-lg text-sm" rows="2" placeholder="Add a comment..."></textarea>
+                        <div class="flex justify-end mt-2">
+                            <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition duration-300">
+                                Add Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle note card clicks and modal
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const noteCard = button.closest('.note-card');
+                const title = noteCard.querySelector('h3').textContent;
+                const time = noteCard.querySelector('span').textContent;
+                const content = noteCard.querySelector('p').textContent;
+                
+                // Update modal content
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalTime').textContent = time;
+                document.getElementById('modalContent').textContent = content;
+                document.getElementById('modalDate').textContent = noteCard.querySelector('.text-gray-500').textContent;
+                
+                // Show modal
+                const modal = document.getElementById('noteModal');
+                modal.classList.add('active');
+            });
+        });
+
+        // Close modal
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('noteModal').classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('noteModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('noteModal')) {
+                document.getElementById('noteModal').classList.remove('active');
+            }
+        });
+
+        // Handle quick note form submission
+        document.getElementById('quickNoteForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically handle the form submission
+            // For now, we'll just clear the form
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

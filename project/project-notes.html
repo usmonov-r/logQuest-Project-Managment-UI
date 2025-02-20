@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Notes - ProjectTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .note-card {
+            transition: all 0.3s ease;
+        }
+        .note-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .time-badge {
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <a href="projects.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">ProjectTracker</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="addNoteBtn" class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center space-x-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Note</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Website Redesign Project</h1>
+                    <p class="text-gray-600 mt-1">Project notes and daily updates</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span class="font-medium">Total Time:</span>
+                        <span class="ml-1">47 hours</span>
+                    </div>
+                    <button class="text-gray-600 hover:text-indigo-600">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Notes Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Note Card 1 -->
+            <div class="note-card bg-white rounded-xl p-6 cursor-pointer slide-in" style="animation-delay: 0.1s" onclick="openNoteModal('1')">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-semibold text-gray-900">Homepage Redesign Progress</h3>
+                    <span class="time-badge px-2 py-1 rounded-full text-white text-xs font-medium">4h</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">Completed the initial wireframes for the homepage. The new design focuses on improving user engagement through better visual hierarchy and clearer call-to-actions.</p>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">Today at 2:30 PM</span>
+                    <span class="text-indigo-600 font-medium">View Details →</span>
+                </div>
+            </div>
+
+            <!-- Note Card 2 -->
+            <div class="note-card bg-white rounded-xl p-6 cursor-pointer slide-in" style="animation-delay: 0.2s" onclick="openNoteModal('2')">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-semibold text-gray-900">Mobile Navigation Implementation</h3>
+                    <span class="time-badge px-2 py-1 rounded-full text-white text-xs font-medium">6h</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">Implemented responsive navigation menu with smooth animations. Added hamburger menu for mobile view with sliding drawer navigation.</p>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">Yesterday at 4:15 PM</span>
+                    <span class="text-indigo-600 font-medium">View Details →</span>
+                </div>
+            </div>
+
+            <!-- Note Card 3 -->
+            <div class="note-card bg-white rounded-xl p-6 cursor-pointer slide-in" style="animation-delay: 0.3s" onclick="openNoteModal('3')">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-semibold text-gray-900">Performance Optimization</h3>
+                    <span class="time-badge px-2 py-1 rounded-full text-white text-xs font-medium">3h</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">Optimized image loading with lazy loading implementation. Improved overall page load time by 40%. Implemented caching strategies.</p>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-500">Dec 20, 2023</span>
+                    <span class="text-indigo-600 font-medium">View Details →</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Note Detail Modal -->
+    <div id="noteModal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="modal-content bg-white rounded-xl max-w-2xl w-full mx-4 transform scale-95 opacity-0 transition-all">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Homepage Redesign Progress</h2>
+                        <p class="text-gray-600 mt-1">December 21, 2023</p>
+                    </div>
+                    <button onclick="closeNoteModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Work Time -->
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Work Time</h3>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clock text-indigo-600"></i>
+                            <span class="text-gray-900">4 hours</span>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Today's Progress</h3>
+                        <p class="text-gray-600">Completed the initial wireframes for the homepage. The new design focuses on improving user engagement through better visual hierarchy and clearer call-to-actions. Key improvements include:</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
+                            <li>Redesigned hero section with stronger value proposition</li>
+                            <li>Improved feature showcase with interactive cards</li>
+                            <li>Added social proof section with customer testimonials</li>
+                            <li>Optimized CTAs placement and styling</li>
+                        </ul>
+                    </div>
+
+                    <!-- Next Steps -->
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">Next Steps</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <ul class="space-y-2">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-arrow-right text-indigo-600 mt-1"></i>
+                                    <span class="text-gray-600">Review wireframes with the design team</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-arrow-right text-indigo-600 mt-1"></i>
+                                    <span class="text-gray-600">Start high-fidelity mockups</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fas fa-arrow-right text-indigo-600 mt-1"></i>
+                                    <span class="text-gray-600">Prepare presentation for stakeholder review</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('noteModal');
+        const modalContent = modal.querySelector('.modal-content');
+
+        function openNoteModal(noteId) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function closeNoteModal() {
+            modal.classList.remove('opacity-100');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeNoteModal();
+            }
+        });
+
+        // Add Note Button
+        document.getElementById('addNoteBtn').addEventListener('click', () => {
+            // Add your logic to handle adding a new note
+            console.log('Add note clicked');
+        });
+    </script>
+</body>
+</html>

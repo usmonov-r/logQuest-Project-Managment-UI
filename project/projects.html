@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - ProjectTracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .project-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .project-card:hover {
+            transform: translateY(-5px) rotateX(4deg);
+        }
+        .card-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+        .project-card:hover .card-shine {
+            transform: translateY(-100%);
+        }
+        .progress-animation {
+            transition: width 1s ease-in-out;
+        }
+        .tag {
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <a href="main.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tasks text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">ProjectTracker</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <input type="text" placeholder="Search projects..." class="bg-gray-100 px-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-64 transition-all duration-300">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button class="text-gray-600 hover:text-indigo-600 relative">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white font-medium">U</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">My Projects</h1>
+                <p class="text-gray-600">Track and manage your ongoing projects</p>
+            </div>
+            <button class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300 flex items-center space-x-2">
+                <i class="fas fa-plus"></i>
+                <span>New Project</span>
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex items-center space-x-4 mb-8 overflow-x-auto pb-2">
+            <button class="tag bg-indigo-100 text-indigo-600 px-4 py-1 rounded-full text-sm font-medium hover:bg-indigo-200">All Projects</button>
+            <button class="tag bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm font-medium hover:bg-green-200">In Progress</button>
+            <button class="tag bg-yellow-100 text-yellow-600 px-4 py-1 rounded-full text-sm font-medium hover:bg-yellow-200">Planning</button>
+            <button class="tag bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium hover:bg-blue-200">Review</button>
+            <button class="tag bg-purple-100 text-purple-600 px-4 py-1 rounded-full text-sm font-medium hover:bg-purple-200">Completed</button>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Project Card 1 -->
+            <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden relative fade-in" style="animation-delay: 0.1s">
+                <div class="card-shine"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-semibold">In Progress</span>
+                        <button class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Website Redesign</h3>
+                    <p class="text-gray-600 text-sm mb-4">Modernizing the company website with new design and improved UX</p>
+                    
+                    <!-- Progress Section -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-600">Progress</span>
+                            <span class="text-indigo-600 font-medium">75%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2">
+                            <div class="progress-animation bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Team & Due Date -->
+                    <div class="flex justify-between items-center">
+                        <div class="flex -space-x-2">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=6366F1&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=A855F7&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <span class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">+3</span>
+                        </div>
+                        <span class="text-sm text-gray-500">Due Dec 24</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden relative fade-in" style="animation-delay: 0.2s">
+                <div class="card-shine"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-semibold">Planning</span>
+                        <button class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Mobile App Development</h3>
+                    <p class="text-gray-600 text-sm mb-4">Creating a new mobile application for customer engagement</p>
+                    
+                    <!-- Progress Section -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-600">Progress</span>
+                            <span class="text-indigo-600 font-medium">30%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2">
+                            <div class="progress-animation bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: 30%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Team & Due Date -->
+                    <div class="flex justify-between items-center">
+                        <div class="flex -space-x-2">
+                            <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=6366F1&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+Williams&background=A855F7&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <span class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">+2</span>
+                        </div>
+                        <span class="text-sm text-gray-500">Due Jan 15</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div class="project-card bg-white rounded-xl shadow-sm overflow-hidden relative fade-in" style="animation-delay: 0.3s">
+                <div class="card-shine"></div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-semibold">Review</span>
+                        <button class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Marketing Campaign</h3>
+                    <p class="text-gray-600 text-sm mb-4">Q4 digital marketing campaign planning and execution</p>
+                    
+                    <!-- Progress Section -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-600">Progress</span>
+                            <span class="text-indigo-600 font-medium">90%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2">
+                            <div class="progress-animation bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Team & Due Date -->
+                    <div class="flex justify-between items-center">
+                        <div class="flex -space-x-2">
+                            <img src="https://ui-avatars.com/api/?name=Mike+Brown&background=6366F1&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://ui-avatars.com/api/?name=Emma+Davis&background=A855F7&color=fff" alt="Team Member" class="w-8 h-8 rounded-full border-2 border-white">
+                            <span class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">+4</span>
+                        </div>
+                        <span class="text-sm text-gray-500">Due Dec 31</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Project Modal Button -->
+    <div class="fixed bottom-6 right-6">
+        <button class="bg-black text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-800 transition duration-300 shadow-lg">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+</body>
+</html>
